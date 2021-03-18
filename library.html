@@ -10,17 +10,26 @@
     <div id="container">
         <button id="newBook" class="open-button" onclick="openForm()">New Book</button>
         <div class="form-popup" id="myForm">
-            <form action="/action_page.php" class="form-container">          
-              <label for="email"><b>Email</b></label>
-              <input type="text" placeholder="Enter Email" name="email" required>
+            <form class="form-container">          
+                <label for="title"><b>Title</b></label>
+                <input type="text" id="title" placeholder="Enter title" name="title" required>
           
-              <label for="psw"><b>Password</b></label>
-              <input type="password" placeholder="Enter Password" name="psw" required>
-          
-              <button type="submit" class="btn">Save</button>
-              <button type="submit" class="btn cancel" onclick="closeForm()">Close</button>
+                <label for="author"><b>Author</b></label>
+                <input type="text" id="author" placeholder="Enter Author" name="author" required>
+
+                <label for="pages"><b>Number of Pages</b></label>
+                <input type="text" id="pages" placeholder="Enter number of pages" name="pages" required>
+
+                <b for="switch" id="switchtitle">Read or not?</b>
+                <label class="switch">
+                    <input id="switch" name="switch" type="checkbox" value="off" onclick="toggle()">
+                    <span class="slider round"></span>
+                </label>
+            
+                <button type="button" class="btn" onclick="newBook()">Save</button>
+                <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
             </form>
-          </div>
+        </div>
     </div>
 </body>
 </html>

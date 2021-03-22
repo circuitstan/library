@@ -19,14 +19,21 @@ let content = ""
 
 const main = document.getElementById('container')
 const newBookBtn = document.getElementById('newBook')
+//let buttons = document.getElementsByClassName('removeBtn')  
+
 
 function addBookToLibrary(book) {
     myLibrary.push(book)
     content = myLibrary[myLibrary.length-1].info()
     let newDiv = document.createElement('div')
+    let removeBtn = document.createElement('button')
+    removeBtn.className = "removeBtn"
+    removeBtn.textContent = "×"
     newDiv.className = "card"
     newDiv.textContent = content
     main.appendChild(newDiv)
+    newDiv.appendChild(removeBtn)
+    //buttons = document.getElementsByClassName('removeBtn')    
 }
 
 function createLibrary() {
@@ -39,9 +46,13 @@ function createLibrary() {
         }*/
         content = myLibrary[i].info()
         let newDiv = document.createElement('div')
+        let removeBtn = document.createElement('button')
+        removeBtn.className = "removeBtn"
+        removeBtn.textContent = "×"
         newDiv.className = "card"
         newDiv.textContent = content
         main.appendChild(newDiv)
+        newDiv.appendChild(removeBtn)
     }
 }
 createLibrary()    
@@ -60,12 +71,19 @@ function newBook() {
     let newPages = document.getElementById('pages').value
     let newSwitch = document.getElementById('switch').value
     if (newSwitch == "off") {
-        newSwitch = "not read yet"
+        readOrNot = "not read yet"
     } else {
-        newSwitch = "read"
+        readOrNot = "read"
     }
-    let newBook = new Book(newTitle, newAuthor, newPages, newSwitch)
+    let newBook = new Book(newTitle, newAuthor, newPages, readOrNot)
     addBookToLibrary(newBook)
+    document.getElementById('title').value = ""
+    document.getElementById('author').value = ""
+    document.getElementById('pages').value = ""
+    if (newSwitch == "on") {
+        document.getElementById('switch').click()
+        console.log("wtf")
+    }
     closeForm()
 }
 
@@ -78,3 +96,12 @@ function toggle() {
         document.getElementById('switch').value = "off"
     }
 }
+
+
+document.getElementById('container').addEventListener('click', function(e) {
+    if (e.target.matches("button.removeBtn")) {
+        console.log(e)
+        main.removeChild(e.path[1])
+    }
+})
+

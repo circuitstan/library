@@ -1,12 +1,21 @@
 function Book(title, author, numberOfPages, readOrNot) {
     this.title = title
-    this.author = author
-    this.numberOfPages = numberOfPages
-    this.readOrNot = readOrNot
+    this.author = "By " + author
+    this.numberOfPages = "- " + numberOfPages + " pages"
+    this.readOrNot = "- " + readOrNot
 }
 
 Book.prototype.info = function() {
     return this.title + " by " + this.author + ", " + this.numberOfPages + " pages, " + this.readOrNot
+}
+
+Book.prototype.changeReadStatus = function() {
+    if (this.readOrNot == "read") {
+        this.readOrNot = "not read yet"
+    } else {
+        this.readOrNot = "read"
+    }
+    return this.readOrNot
 }
 
 
@@ -18,22 +27,14 @@ let myLibrary = [book1, book2]
 let content = ""
 
 const main = document.getElementById('container')
+const main2 = document.createElement('div')
 const newBookBtn = document.getElementById('newBook')
-//let buttons = document.getElementsByClassName('removeBtn')  
 
+main.appendChild(main2)
 
 function addBookToLibrary(book) {
     myLibrary.push(book)
-    content = myLibrary[myLibrary.length-1].info()
-    let newDiv = document.createElement('div')
-    let removeBtn = document.createElement('button')
-    removeBtn.className = "removeBtn"
-    removeBtn.textContent = "×"
-    newDiv.className = "card"
-    newDiv.textContent = content
-    main.appendChild(newDiv)
-    newDiv.appendChild(removeBtn)
-    //buttons = document.getElementsByClassName('removeBtn')    
+    resetLibrary()
 }
 
 function createLibrary() {
@@ -44,15 +45,36 @@ function createLibrary() {
                 content += myLibrary[i][prop] + " "   
             }
         }*/
-        content = myLibrary[i].info()
+        content = myLibrary[i].title
         let newDiv = document.createElement('div')
+        let cardTitle = document.createElement('p')
+        let cardAuthor = document.createElement('p')
+        let cardPages = document.createElement('p')
+        let cardReadStatus = document.createElement('p')
         let removeBtn = document.createElement('button')
+        let toggleText = document.createElement('p')
+        cardTitle.className = "cardTitle"
+        cardAuthor.className = "cardAuthor"
+        cardPages.className = "cardPages"
+        cardReadStatus.className = "cardReadStatus"
         removeBtn.className = "removeBtn"
+        toggleText.className = "toggleText"
         removeBtn.textContent = "×"
         newDiv.className = "card"
-        newDiv.textContent = content
-        main.appendChild(newDiv)
+        newDiv.id = myLibrary[i].title
+        cardTitle.textContent = myLibrary[i].title
+        cardAuthor.textContent = myLibrary[i].author
+        cardPages.textContent = myLibrary[i].numberOfPages
+        cardReadStatus.textContent = myLibrary[i].readOrNot
+        toggleText.textContent = "Update status:"
+        main2.appendChild(newDiv)
         newDiv.appendChild(removeBtn)
+        newDiv.appendChild(cardTitle)
+        newDiv.appendChild(cardAuthor)
+        newDiv.appendChild(cardPages)
+        newDiv.appendChild(cardReadStatus)
+        newDiv.appendChild(toggleText)
+        createToggle(newDiv)
     }
 }
 createLibrary()    
@@ -82,7 +104,6 @@ function newBook() {
     document.getElementById('pages').value = ""
     if (newSwitch == "on") {
         document.getElementById('switch').click()
-        console.log("wtf")
     }
     closeForm()
 }
@@ -101,7 +122,42 @@ function toggle() {
 document.getElementById('container').addEventListener('click', function(e) {
     if (e.target.matches("button.removeBtn")) {
         console.log(e)
-        main.removeChild(e.path[1])
+        removeFromLibrary(e)
+        resetLibrary()
+    }
+    if (e.target.matches("span.slidersmall.roundsmall")) {
+        toggle()
     }
 })
 
+function resetLibrary() {
+    main2.innerHTML = ""
+    createLibrary()
+}
+
+function removeFromLibrary(e) {
+    for (let i = 0; i < myLibrary.length; i++) {
+        if (myLibrary[i].title == e.path[1].id) {
+            myLibrary.splice(i, 1)
+        }
+    }
+    return myLibrary
+}
+
+function createToggle(newDiv) {
+    let toggleDiv = document.createElement('div')
+    let toggleLabel = document.createElement('label')
+    let toggleBtn = document.createElement('input')
+    let slider = document.createElement('span')
+    toggleDiv.className = "toggleDiv"
+    toggleLabel.className = "switchsmall"
+    toggleBtn.id = "switchsmall"
+    toggleBtn.name = "switchsmall"
+    toggleBtn.type = "checkbox"
+    toggleBtn.value = "off"
+    slider.className = "slidersmall roundsmall"
+    newDiv.appendChild(toggleDiv)
+    toggleDiv.appendChild(toggleLabel)
+    toggleLabel.appendChild(toggleBtn)
+    toggleLabel.appendChild(slider)
+}

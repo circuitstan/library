@@ -1,14 +1,39 @@
-.card {
+#container {
     display:grid;
-    width: 150px;
-    height: 180px;
+}
+
+.card {
+    display: grid;
+    width: 230px;
+    height: 260px;
+    text-align: center;
     background-color: blanchedalmond;
     border: solid 2px black;
     margin: 5px;
     top: 23px;
     padding: 25px 12px;
-    font-size: large;
     position: relative;
+}
+
+.cardTitle {
+    font-size: 18px;
+    font-weight: bold;
+    height: fit-content;
+    margin: auto;
+}
+
+.cardAuthor {
+    font-size: 15px;
+    height: fit-content;    
+    margin: 2%;
+    margin-bottom: 40px;
+}
+
+.cardPages, .cardReadStatus {
+    font-size: 15px;
+    height: fit-content;
+    width: max-content;
+    margin-top: -20px;
 }
 
 .removeBtn {
@@ -172,9 +197,81 @@ input:checked + .slider:before {
     margin-bottom: 10px;
 }
 
+.toggleDiv {
+    width: 20px;
+    height: 20px;
+    margin-left: 140px;
+    margin-bottom: 30px;
+}
 
+.toggleText {
+    width: fit-content;
+    height: 30px;
+    padding-top: 5px;
+    font-size: 15px;
+    margin-bottom: -40px;
+}
 
+/* The switch - the box around the slider */
+.switchsmall {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin-bottom: 20px;
+}
 
+/* Hide default HTML checkbox */
+.switchsmall input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
 
+/* The slider */
+.slidersmall {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
 
+.slidersmall:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
 
+input:checked + .slidersmall {
+    background-color: #2196F3;
+}
+/*
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}*/
+
+input:checked + .slidersmall:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slidersmall.roundsmall {
+    border-radius: 34px;
+}
+
+.slidersmall.roundsmall:before {
+    border-radius: 50%;
+}

@@ -31,6 +31,7 @@ const main2 = document.createElement('div')
 const newBookBtn = document.getElementById('newBook')
 
 main.appendChild(main2)
+main2.className = "row"
 
 function addBookToLibrary(book) {
     myLibrary.push(book)
@@ -40,11 +41,6 @@ function addBookToLibrary(book) {
 function createLibrary() {
     for (let i = 0; i<myLibrary.length; i++) {
         content = ""
-        /*for (let prop in myLibrary[i]) {
-            if (myLibrary[i].hasOwnProperty(prop)) {
-                content += myLibrary[i][prop] + " "   
-            }
-        }*/
         content = myLibrary[i].title
         let newDiv = document.createElement('div')
         let cardTitle = document.createElement('p')
@@ -74,7 +70,7 @@ function createLibrary() {
         newDiv.appendChild(cardPages)
         newDiv.appendChild(cardReadStatus)
         newDiv.appendChild(toggleText)
-        createToggle(newDiv)
+        createToggle(newDiv, i)
     }
 }
 createLibrary()    
@@ -118,21 +114,34 @@ function toggle() {
     }
 }
 
+function toggleCard(e) {
+    for (let i = 0; i < myLibrary.length; i++) {
+        if (e.path[3].id == myLibrary[i].title) {
+            if (myLibrary[i].readOrNot == "- read") {
+                myLibrary[i].readOrNot = "- not read yet"
+            } else {
+                myLibrary[i].readOrNot = "- read"
+            }
+            resetLibrary()
+        }
+    }
+}
+
 
 document.getElementById('container').addEventListener('click', function(e) {
     if (e.target.matches("button.removeBtn")) {
-        console.log(e)
         removeFromLibrary(e)
         resetLibrary()
     }
     if (e.target.matches("span.slidersmall.roundsmall")) {
-        toggle()
+        toggleCard(e)
     }
 })
 
 function resetLibrary() {
     main2.innerHTML = ""
     createLibrary()
+    readStatus()
 }
 
 function removeFromLibrary(e) {
@@ -144,14 +153,14 @@ function removeFromLibrary(e) {
     return myLibrary
 }
 
-function createToggle(newDiv) {
+function createToggle(newDiv, nr) {
     let toggleDiv = document.createElement('div')
     let toggleLabel = document.createElement('label')
     let toggleBtn = document.createElement('input')
     let slider = document.createElement('span')
     toggleDiv.className = "toggleDiv"
     toggleLabel.className = "switchsmall"
-    toggleBtn.id = "switchsmall"
+    toggleBtn.id = "switchsmall" + nr
     toggleBtn.name = "switchsmall"
     toggleBtn.type = "checkbox"
     toggleBtn.value = "off"
@@ -161,3 +170,15 @@ function createToggle(newDiv) {
     toggleLabel.appendChild(toggleBtn)
     toggleLabel.appendChild(slider)
 }
+
+function readStatus() {
+    for (let i = 0; i < myLibrary.length; i++) {
+        if (myLibrary[i].readOrNot == "- read") {
+            document.getElementById("switchsmall" + i).checked = true
+        } else {
+            document.getElementById("switchsmall" + i).checked = false
+        }
+    }
+}
+readStatus()
+

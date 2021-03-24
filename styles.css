@@ -2,15 +2,22 @@
     display:grid;
 }
 
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    width: 70%;
+}
+
 .card {
     display: grid;
+    flex-direction: column;
     width: 230px;
     height: 260px;
     text-align: center;
     background-color: blanchedalmond;
     border: solid 2px black;
     margin: 5px;
-    top: 23px;
+    top: 40px;
     padding: 25px 12px;
     position: relative;
 }

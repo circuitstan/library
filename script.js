@@ -116,7 +116,8 @@ function toggle() {
 
 function toggleCard(e) {
     for (let i = 0; i < myLibrary.length; i++) {
-        if (e.path[3].id == myLibrary[i].title) {
+        let path = e.path || e.composedPath()
+        if (path[3].id == myLibrary[i].title) {
             if (myLibrary[i].readOrNot == "- read") {
                 myLibrary[i].readOrNot = "- not read yet"
             } else {
@@ -146,8 +147,9 @@ function resetLibrary() {
 
 function removeFromLibrary(e) {
     for (let i = 0; i < myLibrary.length; i++) {
-        if (myLibrary[i].title == e.path[1].id) {
-            myLibrary.splice(i, 1)
+        let path = e.path || e.composedPath()
+        if (myLibrary[i].title == path[1].id) {
+            myLibrary.splice(i, 1) 
         }
     }
     return myLibrary

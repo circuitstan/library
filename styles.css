@@ -1,3 +1,5 @@
+
+
 #container {
     display:grid;
 }
@@ -61,6 +63,7 @@
 * {
     box-sizing: border-box;
     font-family: 'Courier New', Courier, monospace;
+
 }
 
 /* Button used to open the contact form - fixed at the top of the page */
@@ -213,6 +216,7 @@ input:checked + .slider:before {
 
 .toggleText {
     width: fit-content;
+    width: -moz-fit-content;
     height: 30px;
     padding-top: 5px;
     font-size: 15px;
